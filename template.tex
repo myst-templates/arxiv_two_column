@@ -1,23 +1,18 @@
-\documentclass[twocolumn, switch]{article} % Method A for two-column formatting
+\documentclass[twocolumn, switch]{article}
 \usepackage{preprint}
+\usepackage{hyperref}
 \usepackage[numbers,square]{natbib}
-\PassOptionsToPackage{T1}{fontenc} % use 8-bit T1 fonts
 
 [-IMPORTS-]
 
 % colors for hyperlinks
-\hypersetup{colorlinks = true,
-linkcolor = purple,
-urlcolor  = blue,
-citecolor = cyan,
-anchorcolor = black}
+\hypersetup{colorlinks=true, linkcolor=purple, urlcolor=blue, citecolor=cyan, anchorcolor=black}
 
-%% Math packages
-\usepackage{amsthm}
-\usepackage{fontenc}
+\usepackage[utf8]{inputenc}	% allow utf-8 input
+\usepackage[T1]{fontenc}
 \usepackage{xcolor}
-\usepackage{lineno}		% Line numbers
-\usepackage{tikz} % ORCiD insertion
+\usepackage{lineno}					% Line numbers
+\usepackage{tikz} 					% ORCiD insertion
 
 %% Bibliography options
 \bibliographystyle{unsrtnat}
@@ -63,21 +58,27 @@ anchorcolor = black}
 \usepackage{authblk}
 \renewcommand*{\Authfont}{\bfseries}
 
-% TODO add ORCID IDs
 [# for author in doc.authors #]
-\author[[-author.index-]]{[-author.name-][# if author.orcid #]\href{https://orcid.org/[-author.orcid-]}{\orcidicon}[# endif #]}
+\author[
+	[--author.affiliations|join(', ', 'index')--]
+	[#-if author.email-#]
+	\thanks{\texttt{[-author.email-]}}
+	[#-endif-#]
+]{
+	[--author.name-]
+	[#- if author.orcid -#]
+	\href{https://orcid.org/[-author.orcid-]}{\orcidicon}
+	[#- endif -#]
+}
 [# endfor #]
-[# for author in doc.authors #]
-[# if author.affiliations or author.corresponding#]
-\affil[[-author.index-]]{[# if author.affiliations #][-author.affiliations|join(", ", "value")-] [# endif #][# if author.corresponding #]([-author.email-])[# endif #]}
-[# endif #]
+[# for affiliation in doc.affiliations #]
+\affil[[-affiliation.index-]]{[-affiliation.value-]}
 [# endfor #]
 
 %%%%%%%%%%%%%%    Front matter    %%%%%%%%%%%%%%
 \begin{document}
 
-\twocolumn[ % Method A for two-column formatting
-  \begin{@twocolumnfalse} % Method A for two-column formatting
+\twocolumn[\begin{@twocolumnfalse}
 
 \maketitle
 
@@ -93,8 +94,7 @@ anchorcolor = black}
 
 \vspace{0.5cm}
 
-  \end{@twocolumnfalse} % Method A for two-column formatting
-] % Method A for two-column formatting
+\end{@twocolumnfalse}]
 
 %%%%%%%%%%%%%%%  Main text   %%%%%%%%%%%%%%%
 
