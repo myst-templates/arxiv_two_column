@@ -1,0 +1,66 @@
+jtex: v1
+title: arXiv (Two Column)
+description: A two column arXiv compatible template
+version: 1.0.0
+license: CC-BY-4.0
+thumbnail: ./thumbnail.png
+authors:
+  - name: Brenhin Keller
+    github: https://github.com/brenhinkeller
+    affiliations:
+      - Dartmouth College
+tags:
+  - paper
+  - two-column
+  - preprint
+  - arxiv
+  - bioarxiv
+  - eartharxiv
+source: https://github.com/brenhinkeller/preprint-template.tex
+parts:
+  - id: abstract
+    required: true
+    description: >
+      Keep it short — abstracts longer than 1920 characters will not be
+      accepted; abridge your abstract if necessary
+    max_chars: 1920
+  - id: acknowledgments
+    description: >-
+      Free form acknowledgments section will be include at the end of the
+      article
+doc:
+  - id: title
+    required: true
+  - id: authors
+    required: true
+  - id: keywords
+    required: true
+  - id: bibliography
+options:
+  - id: link
+    type: string
+    description: >
+      Include a link back to the article on curvenote.com. This link will be
+      placed inline at the end of all content, before the bibliography section.
+files:
+  - template.tex
+  - preprint.sty
+packages:
+  - amsthm
+  - authblk
+  - background
+  - fancyhdr
+  - fontenc
+  - geometry
+  - lineno
+  - lipsum
+  - natbib
+  - newfloat
+  - preprint
+  - scalerel
+  - sidecap
+  - tikz
+  - times
+  - titlesec
+  - txfonts
+  - xcolor

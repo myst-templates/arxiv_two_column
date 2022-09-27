@@ -1,0 +1,123 @@
+\documentclass[twocolumn, switch]{article} % Method A for two-column formatting
+\usepackage{preprint}
+\usepackage[numbers,square]{natbib}
+\PassOptionsToPackage{T1}{fontenc} % use 8-bit T1 fonts
+
+[-IMPORTS-]
+
+% colors for hyperlinks
+\hypersetup{colorlinks = true,
+linkcolor = purple,
+urlcolor  = blue,
+citecolor = cyan,
+anchorcolor = black}
+
+%% Math packages
+\usepackage{amsthm}
+\usepackage{fontenc}
+\usepackage{xcolor}
+\usepackage{lineno}		% Line numbers
+\usepackage{tikz} % ORCiD insertion
+
+%% Bibliography options
+\bibliographystyle{unsrtnat}
+
+ %% Special figure caption options
+\usepackage{newfloat}
+\DeclareFloatingEnvironment[name={Supplementary Figure}]{suppfigure}
+\usepackage{sidecap}
+\sidecaptionvpos{figure}{c}
+
+% Section title spacing  options
+\usepackage{titlesec}
+\titlespacing\section{0pt}{12pt plus 3pt minus 3pt}{1pt plus 1pt minus 1pt}
+\titlespacing\subsection{0pt}{10pt plus 3pt minus 3pt}{1pt plus 1pt minus 1pt}
+\titlespacing\subsubsection{0pt}{8pt plus 3pt minus 3pt}{1pt plus 1pt minus 1pt}
+
+\definecolor{lime}{HTML}{A6CE39}
+\DeclareRobustCommand{\orcidicon}{
+	\begin{tikzpicture}
+	\draw[lime, fill=lime] (0,0)
+	circle [radius=0.16]
+	node[white] {{\fontfamily{qag}\selectfont \tiny ID}};
+	\draw[white, fill=white] (-0.0625,0.095)
+	circle [radius=0.007];
+	\end{tikzpicture}
+	\hspace{-2mm}
+}
+
+%%%%%%%%%%%%%%%%   Title   %%%%%%%%%%%%%%%%
+\title{[-doc.title-]}
+
+% Add watermark with submission status
+% Awaiting watermark support
+% \usepackage{xwatermark}
+% % Left watermark
+% \newwatermark[firstpage,color=gray!60,angle=90,scale=0.32, xpos=-4.05in,ypos=0]{\href{https://doi.org/}{\color{gray}{Publication doi}}}
+% % Right watermark
+% \newwatermark[firstpage,color=gray!60,angle=90,scale=0.32, xpos=3.9in,ypos=0]{\href{https://doi.org/}{\color{gray}{Preprint doi}}}
+% % Bottom watermark
+% \newwatermark[firstpage,color=gray!90,angle=0,scale=0.28, xpos=0in,ypos=-5in]{*correspondence: \texttt{}}
+
+%%%%%%%%%%%%%%%  Author list  %%%%%%%%%%%%%%%
+\usepackage{authblk}
+\renewcommand*{\Authfont}{\bfseries}
+
+% TODO add ORCID IDs
+[# for author in doc.authors #]
+\author[[-author.index-]]{[-author.name-][# if author.orcid #]\href{https://orcid.org/[-author.orcid-]}{\orcidicon}[# endif #]}
+[# endfor #]
+[# for author in doc.authors #]
+[# if author.affiliations or author.corresponding#]
+\affil[[-author.index-]]{[# if author.affiliations #][-author.affiliations|join(", ", "value")-] [# endif #][# if author.corresponding #]([-author.email-])[# endif #]}
+[# endif #]
+[# endfor #]
+
+%%%%%%%%%%%%%%    Front matter    %%%%%%%%%%%%%%
+\begin{document}
+
+\twocolumn[ % Method A for two-column formatting
+  \begin{@twocolumnfalse} % Method A for two-column formatting
+
+\maketitle
+
+[# if parts.abstract #]
+\begin{abstract}
+[-parts.abstract-]\\
+\end{abstract}
+[# endif #]
+
+[# if doc.keywords #]
+\keywords{[-doc.keywords|join(", ")-]}
+[# endif #]
+
+\vspace{0.5cm}
+
+  \end{@twocolumnfalse} % Method A for two-column formatting
+] % Method A for two-column formatting
+
+%%%%%%%%%%%%%%%  Main text   %%%%%%%%%%%%%%%
+
+[-CONTENT-]
+
+[# if parts.acknowledgments #]
+%%%%%%%%%%%%% Acknowledgements %%%%%%%%%%%%%
+\section*{Acknowledgements}
+\footnotesize
+[- parts.acknowledgments -]
+\normalsize
+[# endif #]
+
+[# if options.link #]
+\section*{Original article}
+\footnotesize
+This article is available online at the following URL: \href{[-options.link-]}{[-options.link-]}
+\normalsize
+[# endif #]
+
+%%%%%%%%%%%%%%   Bibliography   %%%%%%%%%%%%%%
+[# if doc.bibliography #]
+\bibliography{[- doc.bibliography | join(", ") -]}
+[# endif #]
+
+\end{document}
