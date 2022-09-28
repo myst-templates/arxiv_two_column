@@ -5,7 +5,7 @@ A list of changes made when porting the original tex and styles to the Curvenote
 - Copied `preprint-template.sty` to the root template folder
 - Based `template.tex` on a copy of `preprint-template.tex` shipped in the original
 - Using Method A for two column layout
-- Added `\input{curvenote.def}` to allow packages and configuration to be loaded
+- Added `[-IMPORTS-]` to allow packages and configuration to be loaded
 - Removed package includes that are already listed in Curvenote base packages
 - Moved any package options up (early as possible) into `\PassOptionsToPackage` commands
   - natbib: numbers, square
